@@ -39,7 +39,7 @@ export async function viewMember(req, res) {
         } else {
             res.json({
                 success: true,
-                message: 'No Member record found.',
+                message: 'No matching member record found.',
             })
         }
     } catch (err) {
@@ -91,7 +91,7 @@ export async function updateMember(req, res) {
         } else {
             res.json({
                 success: true,
-                message: 'No Member record found.',
+                message: 'No matching member record found.',
             })
         }
     } catch (err) {
@@ -105,7 +105,29 @@ export async function updateMember(req, res) {
 
 
 //Delete a member
-export function deleteMember(req, res) {
-    console.log(req.body);
-    res.send(req.body)
+export async function deleteMember(req, res) {
+    try {
+        let memberDel = await Member.findOne({where: {member_id: req.params.id}});
+        if (memberDel) {
+            memberDel.destroy();
+            res.json({
+                success: true,
+                message: "Member deleted!",
+                data: memberDel,
+            })
+            
+        } else {
+            res.json({
+                success: true,
+                message: 'No matching member record found.',
+            })
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            success: false,
+            message: "Oopss! Something is wrong..."
+        })
+    }
 }
+

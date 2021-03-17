@@ -17,7 +17,7 @@ membersRouter.get("/" , viewAllMembers);
 membersRouter.put("/:id", updateMember);
 
 //Delete a member members/:id
-membersRouter.delete("/:id", authenticate, deleteMember);
+membersRouter.delete("/:id", deleteMember);
 
 export default membersRouter;
 
