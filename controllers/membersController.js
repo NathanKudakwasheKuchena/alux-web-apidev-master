@@ -33,13 +33,13 @@ export async function viewMember(req, res) {
         if (allmembers) {
             res.json({
                 success: true,
-                message: 'Member records retrieved successfully',
+                message: 'Member record retrieved successfully',
                 data: allmembers
             })
         } else {
             res.json({
                 success: true,
-                message: 'No Member records found.',
+                message: 'No Member record found.',
             })
         }
     } catch (err) {
@@ -77,10 +77,32 @@ export async function viewAllMembers(req, res) {
 }
 
 //Update member record
-export function updateMember(req, res) {
-    console.log(req.body);
-    res.send(req.body)
+export async function updateMember(req, res) {
+    try {
+        let memberUp = await Member.findOne({where: {member_id: req.params.id}});
+        if (memberUp) {
+            memberUp.update(req.body);
+            res.json({
+                success: true,
+                message: "Member updated!",
+                data: memberUp,
+            })
+            
+        } else {
+            res.json({
+                success: true,
+                message: 'No Member record found.',
+            })
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            success: false,
+            message: "Oopss! Something is wrong..."
+        })
+    }
 }
+
 
 //Delete a member
 export function deleteMember(req, res) {

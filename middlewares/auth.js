@@ -11,7 +11,7 @@ export function authenticate(req, res, next) {
     } catch (err) {
         res.status(401).json({
             status: 'failed',
-            message: "Authentication Failed: Incorrect Auth Token."
+            message: "Authentication Failed: Incorrect auth token."
         })
     }
 }
